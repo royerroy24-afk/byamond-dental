@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="es" class="overflow-x-hidden scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>BYAMOND | Salud Dental y Estética Orofacial</title>
+    <meta name="description" content="BYAMOND – Salud Dental y Estética Orofacial. Odontología integral de alta estética y armonización facial avanzada bajo el concepto de lujo silencioso.">
+    <link rel="icon" type="image/png" href="LOGO/BYAMOND (1).png">
+
+    <!-- Google Fonts: Lora (Italic Editorial de Lujo) & Plus Jakarta Sans (Texto Clínico Moderno) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Lora"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    },
+                    colors: {
+                        mauve: {
+                            light: '#B28E95',
+                            DEFAULT: '#9E7B82', // Malva empolvado oficial de BYAMOND
+                            dark: '#8A6870',
+                            deep: '#5E434A',
+                            night: '#453036'
+                        },
+                        ivory: '#FDFBF9',
+                        quartz: '#F4D9D0',
+                        perla: '#FAFAFA',
+                        plomo: {
+                            50: '#F8F9FA',
+                            100: '#F1F3F5',
+                            200: '#E5E7EB',
+                            300: '#D1D5DB',
+                            400: '#9CA3AF',
+                            500: '#6B7280'
+                        },
+                        carbon: '#1F2937'
+                    },
+                    keyframes: {
+                        fadeInView: {
+                            '0%': { opacity: '0', transform: 'translateY(18px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    },
+                    animation: {
+                        fadeInView: 'fadeInView 0.7s cubic-bezier(0.16, 1, 0.3, 1) both'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html, body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            max-width: 100vw;
+            background-color: #FAFAFA;
+        }
+
+        
+        /* Safe area & dvh utilities para iPhone y Android */
+        :root {
+            --sat: env(safe-area-inset-top, 0px);
+            --sab: env(safe-area-inset-bottom, 0px);
+            --sal: env(safe-area-inset-left, 0px);
+            --sar: env(safe-area-inset-right, 0px);
+        }
+        .min-h-dvh {
+            min-height: 100vh;
+            min-height: 100dvh;
+        }
+        .safe-pb {
+            padding-bottom: calc(1rem + var(--sab));
+        }
+        .touch-target {
+            min-height: 48px;
+        }
+
+        /* Arquitectura de 6 Caras Independientes (Single View Isolation) */
+        [data-view] {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        [data-view].is-active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navbar dinámico según cara */
+        #navbar {
+            transition: background-color .5s ease, border-color .5s ease, color .5s ease, box-shadow .5s ease;
+        }
+        #navbar.on-hero {
+            background: rgba(138, 104, 112, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #FDFBF9;
+        }
+        #navbar.on-light {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-color: #E5E7EB;
+            color: #1F2937;
+            box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Items de navegación con subrayado malva animado */
+        .nav-item {
+            position: relative;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        .nav-item:hover { opacity: 1; }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -8px;
+            height: 2px;
+            width: 0;
+            background: #9E7B82;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(-50%);
+            border-radius: 9999px;
+        }
+        #navbar.on-hero .nav-item::after {
+            background: #FDFBF9;
+        }
+        .nav-item.active {
+            opacity: 1;
+            font-weight: 600;
+        }
+        .nav-item.active::after {
+            width: 100%;
+        }
+
+        /* Botones de Lujo Silencioso */
+        .btn-mauve {
+            background: linear-gradient(135deg, #9E7B82 0%, #8A6870 100%);
+            color: #ffffff;
+            transition: all 0.35s ease;
+        }
+        .btn-mauve:hover {
+            background: linear-gradient(135deg, #8A6870 0%, #5E434A 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -8px rgba(138, 104, 112, 0.6);
+        }
+
+        .btn-ivory {
+            background: #FDFBF9;
+            color: #5E434A;
+            transition: all 0.35s ease;
+        }
+        .btn-ivory:hover {
+            background: #F4D9D0;
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(244, 217, 208, 0.6);
+        }
+
+        /* Tarjetas de tratamientos clínicos de lujo */
+        .card-luxe {
+            background: #ffffff;
+            border: 1px solid #E5E7EB;
+            border-radius: 1.25rem;
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card-luxe:hover {
+            transform: translateY(-6px);
+            border-color: rgba(158, 123, 130, 0.5);
+            box-shadow: 0 20px 40px -15px rgba(31, 41, 55, 0.08);
+        }
+
+        /* Slider Comparador Antes/Después */
+        .ba-wrap { position: relative; overflow: hidden; user-select: none; }
+        .ba-after { position: absolute; inset: 0; clip-path: inset(0 0 0 50%); }
+        .ba-handle {
+            position: absolute; top: 0; bottom: 0; left: 50%; width: 2px;
+            background: #fff; transform: translateX(-50%); pointer-events: none;
+        }
+        .ba-handle::after {
+            content: '\2194'; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); width: 38px; height: 38px;
+            border-radius: 9999px; background: #fff; color: #8A6870;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        }
+        .ba-range { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; }
+
+        /* Estilos de formulario interactivo */
+        .field-input { background: #F9FAFB; border: 1px solid #E5E7EB; color: #1F2937; }
+        .field-input:focus { outline: none; border-color: #9E7B82; background: #ffffff; box-shadow: 0 0 0 3px rgba(158, 123, 130, 0.15); }
+
+        ::-webkit-scrollbar { width: 7px; }
+        ::-webkit-scrollbar-track { background: #F1F3F5; }
+        ::-webkit-scrollbar-thumb { background: #9E7B82; border-radius: 9999px; }
+    </style>
+</head>
+<body class="bg-perla text-carbon antialiased overflow-x-hidden selection:bg-quartz selection:text-mauve-deep">
+
+    <!-- =====================================================
+         NAVBAR DINÁMICO (ENLACE A LAS 6 CARAS)
+    ====================================================== -->
+    <header id="navbar" class="on-hero fixed top-0 left-0 w-full z-50 border-b">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between gap-4">
+
+            <!-- LOGO OFICIAL DE BYAMOND (LOGO PRINCIPAL COMPLETO BIEN PROPORCIONADO) -->
+            <a href="#inicio" class="flex items-center gap-3 shrink-0 group">
+                <img src="LOGO/Logo-byamond.png" alt="Logo Principal BYAMOND" class="h-9 sm:h-10 md:h-11 w-auto object-contain drop-shadow-[0_2px_10px_rgba(255,255,255,0.3)] group-hover:scale-105 transition-transform duration-300">
+            </a>
+
+            <!-- NAVEGACIÓN ENTRE LAS 6 CARAS INDEPENDIENTES -->
+            <nav class="hidden lg:flex items-center gap-8 text-[11px] font-medium tracking-[0.22em] uppercase">
+                <a href="#inicio" data-link="inicio" class="nav-item">Inicio</a>
+                <a href="#servicios" data-link="servicios" class="nav-item">Servicios</a>
+                <a href="#maquinas" data-link="maquinas" class="nav-item">Máquinas</a>
+                <a href="#pacientes" data-link="pacientes" class="nav-item">Pacientes</a>
+                <a href="#experiencia" data-link="experiencia" class="nav-item">Experiencia</a>
+                <a href="#contacto" data-link="contacto" class="nav-item">Contacto</a>
+            </nav>
+
+            <!-- CTA HEADER -->
+            <div class="flex items-center gap-3">
+                <a href="#contacto" id="navCta" class="hidden sm:inline-flex btn-ivory rounded-full px-6 py-2.5 text-[11px] font-semibold tracking-[0.18em] uppercase items-center">
+                    Reservar Cita
+                </a>
+                <button type="button" id="menuBtn" aria-label="Abrir menú" class="lg:hidden w-10 h-10 rounded-full border border-current/30 flex items-center justify-center">
+                    <i id="menuIcon" class="fa-solid fa-bars text-sm"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- MENÚ MÓVIL DESPLEGABLE -->
+        <div id="mobileNav" class="hidden lg:hidden bg-white/95 backdrop-blur-xl text-carbon border-t border-plomo-200 px-5 py-3 shadow-2xl transition-all duration-300">
+            <a href="#inicio" data-link="inicio" class="m-item flex items-center min-h-[48px] py-3 text-xs uppercase tracking-[0.2em] font-medium border-b border-plomo-100 active:text-mauve transition-colors">Inicio</a>
+            <a href="#servicios" data-link="servicios" class="m-item flex items-center min-h-[48px] py-3 text-xs uppercase tracking-[0.2em] font-medium border-b border-plomo-100 active:text-mauve transition-colors">Servicios</a>
+            <a href="#maquinas" data-link="maquinas" class="m-item flex items-center min-h-[48px] py-3 text-xs uppercase tracking-[0.2em] font-medium border-b border-plomo-100 active:text-mauve transition-colors">Máquinas</a>
+            <a href="#pacientes" data-link="pacientes" class="m-item flex items-center min-h-[48px] py-3 text-xs uppercase tracking-[0.2em] font-medium border-b border-plomo-100 active:text-mauve transition-colors">Pacientes</a>
+            <a href="#experiencia" data-link="experiencia" class="m-item flex items-center min-h-[48px] py-3 text-xs uppercase tracking-[0.2em] font-medium border-b border-plomo-100 active:text-mauve transition-colors">Experiencia</a>
+            <a href="#contacto" data-link="contacto" class="m-item flex items-center min-h-[48px] py-3 text-xs uppercase tracking-[0.2em] font-medium active:text-mauve transition-colors">Contacto</a>
+        </div>
+    </header>
+
+    <main id="app">
+
+        <!-- =====================================================
+             CARA 1: INICIO (PORTADA COLOR MALVA + FOTOGRAFÍA + 5 CASILLAS BENTO)
+        ====================================================== -->
+        <div data-view="inicio">
+            <!-- PORTADA HERO COMPACTA Y COHESIVA (FONDO MALVA EMPOLVADO #9E7B82 DE LA MARCA) -->
+            <section class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#9E7B82] via-[#8A6870] to-[#74565D] pt-20 pb-10 px-4 sm:px-6">
+                <!-- Fotografía Femenina de Alta Estética en Baja Opacidad y Luminosidad -->
+                <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1920&q=80" alt="Estética Femenina Byamond" class="w-full h-full object-cover opacity-25 mix-blend-luminosity">
+                    <div class="absolute inset-0 bg-gradient-to-b from-[#9E7B82]/40 via-transparent to-[#74565D]/85"></div>
+                    <!-- Destellos prismáticos sutiles inspirados en el monograma del logo -->
+                    <div class="absolute -left-10 top-10 w-32 h-[450px] rotate-[18deg] bg-gradient-to-b from-white/20 via-quartz/10 to-transparent blur-[1px]"></div>
+                    <div class="absolute -right-10 bottom-0 w-32 h-[400px] rotate-[18deg] bg-gradient-to-t from-white/20 via-quartz/10 to-transparent blur-[1px]"></div>
+                    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[750px] h-[450px] bg-quartz/15 rounded-full blur-[140px]"></div>
+                </div>
+
+                <!-- BLOQUE CENTRAL COHESIVO, COMPACTO Y ARMÓNICO (CERO ESPACIOS VACÍOS) -->
+                <div class="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center justify-center gap-5">
+                    
+                    <!-- ISOTIPO MONOGRAMA + LOGO PRINCIPAL AGRANDADO E IMPONENTE -->
+                    <div class="flex flex-col items-center justify-center">
+                        <img src="LOGO/BYAMOND (1).png" alt="Monograma BYAMOND" class="w-14 sm:w-16 md:w-20 h-auto object-contain drop-shadow-[0_4px_18px_rgba(255,255,255,0.35)] mb-2 animate-pulse transition-transform hover:scale-105 duration-300">
+                        <img src="LOGO/Logo-byamond.png" alt="BYAMOND Salud Dental y Estética Orofacial" class="w-[82%] max-w-[320px] sm:max-w-[460px] md:max-w-[560px] mx-auto h-auto object-contain drop-shadow-[0_6px_30px_rgba(244,217,208,0.5)]">
+                        <span class="text-[11px] sm:text-xs md:text-sm tracking-[0.3em] sm:tracking-[0.38em] uppercase text-ivory/90 font-medium mt-2 block">
+                            Salud Dental y Estética Orofacial
+                        </span>
+                    </div>
+
+                    <!-- Frase Emocional Editorial en Lora Italic -->
+                    <p class="font-serif italic text-base sm:text-lg md:text-xl text-ivory/95 max-w-2xl mx-auto leading-relaxed font-light">
+                        “Donde la precisión de la odontología se encuentra con el arte de la armonía facial.”
+                    </p>
+
+                    <!-- Botones de Acción Hero Agrupados -->
+                    <div class="flex flex-col sm:flex-row justify-center items-center gap-3.5 w-full sm:w-auto pt-1">
+                        <a href="#contacto" class="btn-ivory rounded-full px-8 sm:px-9 py-3.5 min-h-[48px] w-full sm:w-auto text-xs font-semibold tracking-[0.2em] uppercase inline-flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all">
+                            <i class="fa-regular fa-calendar"></i> Reservar mi Evaluación
+                        </a>
+                        <a href="#accesos" id="toAccesos" class="rounded-full px-8 sm:px-9 py-3.5 min-h-[48px] w-full sm:w-auto text-xs font-medium tracking-[0.2em] uppercase border border-white/45 text-ivory hover:bg-white/10 active:scale-95 transition-all inline-flex items-center justify-center gap-2">
+                            Explorar Clínica <i class="fa-solid fa-arrow-down text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DEBAJO DE LA PORTADA: 5 CASILLAS BENTO GRID EN FONDO PLOMO CLARO -->
+            <section id="accesos" class="bg-plomo-50 py-14 md:py-20 border-t border-plomo-200">
+                <div class="max-w-7xl mx-auto px-5 sm:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-10">
+                        <span class="text-[10px] tracking-[0.35em] uppercase text-mauve font-semibold">Arquitectura Multicara</span>
+                        <h2 class="font-serif text-3xl md:text-5xl text-carbon mt-2">Explora cada espacio en su <span class="italic text-mauve">propia pantalla</span></h2>
+                        <p class="text-plomo-500 text-sm md:text-base font-light mt-2">Haz clic en cualquiera de las 5 casillas Bento para abrir su cara independiente:</p>
+                    </div>
+
+                    <!-- Bento Grid con Imágenes de Vista Previa -->
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-5 md:auto-rows-[260px]">
+                        
+                        <!-- CASILLA 1: SERVICIOS (COL-SPAN-4) -->
+                        <a href="#servicios" class="group relative md:col-span-4 md:row-span-1 min-h-[250px] rounded-2xl overflow-hidden border border-plomo-200 shadow-sm">
+                            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=1200&q=80" alt="Servicios Byamond" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-carbon/85 via-carbon/30 to-transparent"></div>
+                            <div class="absolute bottom-0 p-7 text-white">
+                                <span class="text-[10px] tracking-[0.3em] uppercase text-quartz font-semibold">Casilla 01</span>
+                                <h3 class="font-serif text-3xl mt-1">Servicios</h3>
+                                <p class="text-xs text-white/80 font-light mt-1">14 tratamientos de odontología estética y armonización orofacial</p>
+                            </div>
+                            <span class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/90 text-mauve flex items-center justify-center group-hover:bg-mauve group-hover:text-white transition-all shadow-md">
+                                <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
+                            </span>
+                        </a>
+
+                        <!-- CASILLA 2: MÁQUINAS (COL-SPAN-2) -->
+                        <a href="#maquinas" class="group relative md:col-span-2 min-h-[250px] rounded-2xl overflow-hidden border border-plomo-200 shadow-sm">
+                            <img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=800&q=80" alt="Máquinas Byamond" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-carbon/85 via-carbon/30 to-transparent"></div>
+                            <div class="absolute bottom-0 p-7 text-white">
+                                <span class="text-[10px] tracking-[0.3em] uppercase text-quartz font-semibold">Casilla 02</span>
+                                <h3 class="font-serif text-3xl mt-1">Máquinas</h3>
+                                <p class="text-xs text-white/80 font-light mt-1">Morpheus 8, Escáner 3D, Láser y Piezoeléctrico</p>
+                            </div>
+                            <span class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/90 text-mauve flex items-center justify-center group-hover:bg-mauve group-hover:text-white transition-all shadow-md">
+                                <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
+                            </span>
+                        </a>
+
+                        <!-- CASILLA 3: PACIENTES (COL-SPAN-2) -->
+                        <a href="#pacientes" class="group relative md:col-span-2 min-h-[250px] rounded-2xl overflow-hidden border border-plomo-200 shadow-sm">
+                            <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80" alt="Casos de Pacientes" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-carbon/85 via-carbon/30 to-transparent"></div>
+                            <div class="absolute bottom-0 p-7 text-white">
+                                <span class="text-[10px] tracking-[0.3em] uppercase text-quartz font-semibold">Casilla 03</span>
+                                <h3 class="font-serif text-3xl mt-1">Pacientes</h3>
+                                <p class="text-xs text-white/80 font-light mt-1">Casos de éxito y testimonios</p>
+                            </div>
+                            <span class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/90 text-mauve flex items-center justify-center group-hover:bg-mauve group-hover:text-white transition-all shadow-md">
+                                <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
+                            </span>
+                        </a>
+
+                        <!-- CASILLA 4: EXPERIENCIA (COL-SPAN-2) -->
+                        <a href="#experiencia" class="group relative md:col-span-2 min-h-[250px] rounded-2xl overflow-hidden border border-plomo-200 shadow-sm">
+                            <img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=800&q=80" alt="Instalaciones Byamond" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-carbon/85 via-carbon/30 to-transparent"></div>
+                            <div class="absolute bottom-0 p-7 text-white">
+                                <span class="text-[10px] tracking-[0.3em] uppercase text-quartz font-semibold">Casilla 04</span>
+                                <h3 class="font-serif text-3xl mt-1">Experiencia</h3>
+                                <p class="text-xs text-white/80 font-light mt-1">El estándar de confort Byamond</p>
+                            </div>
+                            <span class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/90 text-mauve flex items-center justify-center group-hover:bg-mauve group-hover:text-white transition-all shadow-md">
+                                <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
+                            </span>
+                        </a>
+
+                        <!-- CASILLA 5: CONTACTO (COL-SPAN-2) -->
+                        <a href="#contacto" class="group relative md:col-span-2 min-h-[250px] rounded-2xl overflow-hidden bg-gradient-to-br from-[#9E7B82] to-[#74565D] shadow-sm flex flex-col justify-between p-7 text-white">
+                            <img src="LOGO/BYAMOND (1).png" alt="Monograma Byamond" class="w-10 h-auto object-contain opacity-95">
+                            <div>
+                                <span class="text-[10px] tracking-[0.3em] uppercase text-quartz font-semibold">Casilla 05</span>
+                                <h3 class="font-serif text-3xl mt-1">Contacto</h3>
+                                <p class="text-xs text-white/85 font-light mt-1">Selector interactivo a WhatsApp</p>
+                            </div>
+                            <span class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white text-mauve flex items-center justify-center group-hover:scale-110 transition-all shadow-md">
+                                <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
+                            </span>
+                        </a>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =====================================================
+             CARA 2: SERVICIOS (DESPLIEGUE COMPLETO DE LOS 14 TRATAMIENTOS)
+        ====================================================== -->
+        <div data-view="servicios" class="bg-perla">
+            <header class="pt-28 pb-8 text-center px-5">
+                <span class="text-[10px] tracking-[0.35em] uppercase text-mauve font-semibold">Pantalla Exclusiva · Servicios</span>
+                <h1 class="font-serif text-4xl md:text-6xl text-carbon mt-3">Salud Dental y <span class="italic text-mauve">Estética Orofacial</span></h1>
+                <p class="text-plomo-500 text-sm md:text-lg font-light max-w-3xl mx-auto mt-4">Catálogo clínico completo desarrollado con tecnología avanzada, biocompatibilidad superior y diseño anatómico individualizado.</p>
+            </header>
+
+            <!-- BLOQUE 1: ODONTOLOGÍA INTEGRAL Y DE ALTA ESTÉTICA -->
+            <section class="bg-plomo-100 py-10 md:py-14 border-t border-plomo-200">
+                <div class="max-w-7xl mx-auto px-5 sm:px-8">
+                    <div class="mb-12">
+                        <span class="text-[10px] tracking-[0.3em] uppercase text-mauve font-semibold">Bloque 01</span>
+                        <h2 class="font-serif text-3xl md:text-4xl text-carbon mt-1">Odontología Integral y de <span class="italic text-mauve">Alta Estética</span></h2>
+                        <p class="text-plomo-500 text-sm font-light mt-2">Restauración funcional, armonía dental y diseño digital de la sonrisa.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        
+                        <!-- 1. Rehabilitación Oral -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-64 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=1000&q=80" alt="Rehabilitación Oral" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase text-mauve">Especialidad 01</span>
+                            </div>
+                            <div class="p-8 flex flex-col flex-1">
+                                <h3 class="font-serif text-2xl text-carbon"><span class="italic text-mauve">Rehabilitación</span> Oral</h3>
+                                <p class="text-sm text-plomo-500 font-light mt-3 leading-relaxed">
+                                    Reconstrucción integral de la función masticatoria, oclusión y estética dental mediante coronas cerámicas, incrustaciones biomiméticas y prótesis de alta biocompatibilidad.
+                                </p>
+                                <ul class="grid grid-cols-2 gap-2 text-xs text-carbon/80 mt-5 mb-7 font-light">
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Recuperación oclusal</li>
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Cerámicas libres de metal</li>
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Ajuste milimétrico digital</li>
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Confort masticatorio total</li>
+                                </ul>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Rehabilitaci%C3%B3n%20Oral" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-center flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Agendar Tratamiento
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 2. Implantes Dentales -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-64 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=1000&q=80" alt="Implantes Dentales" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase text-mauve">Especialidad 02</span>
+                            </div>
+                            <div class="p-8 flex flex-col flex-1">
+                                <h3 class="font-serif text-2xl text-carbon"><span class="italic text-mauve">Implantes</span> Dentales</h3>
+                                <p class="text-sm text-plomo-500 font-light mt-3 leading-relaxed">
+                                    Reposición permanente de piezas ausentes con implantes de titanio grado médico y zirconio. Planificación 3D guiada por tomografía para procedimientos indoloros y seguros.
+                                </p>
+                                <ul class="grid grid-cols-2 gap-2 text-xs text-carbon/80 mt-5 mb-7 font-light">
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Cirugía guiada 3D</li>
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Osteointegración premium</li>
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Carga inmediata disponible</li>
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Sensación de diente natural</li>
+                                </ul>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Implantes%20Dentales" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-center flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Agendar Tratamiento
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 3. Ortodoncia -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-64 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1000&q=80" alt="Ortodoncia" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase text-mauve">Especialidad 03</span>
+                            </div>
+                            <div class="p-8 flex flex-col flex-1">
+                                <h3 class="font-serif text-2xl text-carbon"><span class="italic text-mauve">Ortodoncia</span> Invisible & Brackets Zafiro</h3>
+                                <p class="text-sm text-plomo-500 font-light mt-3 leading-relaxed">
+                                    Alineación dental biológica con alineadores transparentes removibles y sistemas estéticos de autoligado. Corrección precisa de mordida con discreción absoluta.
+                                </p>
+                                <ul class="grid grid-cols-2 gap-2 text-xs text-carbon/80 mt-5 mb-7 font-light">
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Alineadores invisibles</li>
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Escaneo intraoral sin moldes</li>
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Sin molestias metálicas</li>
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Tiempos optimizados</li>
+                                </ul>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Ortodoncia" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-center flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Agendar Tratamiento
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 4. Estética Dental (Diseño de sonrisa) -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-64 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=1000&q=80" alt="Estética Dental y Diseño de Sonrisa" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase text-mauve">Especialidad 04</span>
+                            </div>
+                            <div class="p-8 flex flex-col flex-1">
+                                <h3 class="font-serif text-2xl text-carbon">Estética Dental <span class="italic text-mauve">(Diseño de Sonrisa)</span></h3>
+                                <p class="text-sm text-plomo-500 font-light mt-3 leading-relaxed">
+                                    Carillas cerámicas ultradelgadas, lentes de contacto dental y blanqueamiento clínico láser. Proporciones áureas diseñadas a la medida de los rasgos de tu rostro.
+                                </p>
+                                <ul class="grid grid-cols-2 gap-2 text-xs text-carbon/80 mt-5 mb-7 font-light">
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Simulación 3D en pantalla</li>
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Mínimo desgaste dental</li>
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Translúcido y natural</li>
+                                    <li><i class="fa-solid fa-check text-mauve mr-2"></i>Resistencia a manchas</li>
+                                </ul>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Dise%C3%B1o%20de%20Sonrisa" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-center flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Agendar Tratamiento
+                                </a>
+                            </div>
+                        </article>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- BLOQUE 2: ARMONIZACIÓN OROFACIAL (CUIDADO DE PIEL Y REJUVENECIMIENTO) -->
+            <section class="py-10 md:py-16 border-t border-plomo-200 bg-perla">
+                <div class="max-w-7xl mx-auto px-5 sm:px-8">
+                    <div class="mb-12">
+                        <span class="text-[10px] tracking-[0.3em] uppercase text-mauve font-semibold">Bloque 02</span>
+                        <h2 class="font-serif text-3xl md:text-4xl text-carbon mt-1">Armonización <span class="italic text-mauve">Orofacial</span></h2>
+                        <p class="text-plomo-500 text-sm font-light mt-2">Cuidado de la piel, rejuvenecimiento facial y armonización integral del rostro con medicina estética de vanguardia.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+
+                        <!-- 5. Toxina Botulínica (Arrugas faciales y Bruxismo) -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-56 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=800&q=80" alt="Toxina Botulínica" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-semibold tracking-wider uppercase text-mauve">Tratamiento 05</span>
+                            </div>
+                            <div class="p-6 flex flex-col flex-1">
+                                <h3 class="font-serif text-xl text-carbon">Toxina Botulínica <span class="italic text-mauve">(Arrugas y Bruxismo)</span></h3>
+                                <p class="text-xs text-plomo-500 font-light mt-2.5 leading-relaxed">
+                                    Atenuación suave de líneas en frente, entrecejo y patas de gallo preservando tu expresividad. En maseteros, relaja la tensión nocturna y estiliza el contorno facial.
+                                </p>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Toxina%20Botul%C3%ADnica" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-center mt-5 flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Reservar
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 6. Ácido Hialurónico – Rinomodelación -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-56 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1512290900672-1f0236a00dfb?auto=format&fit=crop&w=800&q=80" alt="Rinomodelación" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-semibold tracking-wider uppercase text-mauve">Tratamiento 06</span>
+                            </div>
+                            <div class="p-6 flex flex-col flex-1">
+                                <h3 class="font-serif text-xl text-carbon">Ácido Hialurónico – <span class="italic text-mauve">Rinomodelación</span></h3>
+                                <p class="text-xs text-plomo-500 font-light mt-2.5 leading-relaxed">
+                                    Rectificación del dorso nasal y elevación sutil de la punta sin cirugía ni postoperatorio. Perfil armónico con resultados inmediatos y reversibles.
+                                </p>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Rinomodelaci%C3%B3n" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-center mt-5 flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Reservar
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 7. Ácido Hialurónico – Escultura Labial -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-56 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1616391182219-e080b4d1043a?auto=format&fit=crop&w=800&q=80" alt="Escultura Labial" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-semibold tracking-wider uppercase text-mauve">Tratamiento 07</span>
+                            </div>
+                            <div class="p-6 flex flex-col flex-1">
+                                <h3 class="font-serif text-xl text-carbon">Ácido Hialurónico – <span class="italic text-mauve">Escultura Labial</span></h3>
+                                <p class="text-xs text-plomo-500 font-light mt-2.5 leading-relaxed">
+                                    Definición anatómica del arco de cupido, hidratación dérmica y volumen armónico adaptado a tus facciones mediante técnicas de microcánula.
+                                </p>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Escultura%20Labial" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-center mt-5 flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Reservar
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 8. Ácido Hialurónico – Tratamiento de Ojeras -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-56 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80" alt="Tratamiento de Ojeras" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-semibold tracking-wider uppercase text-mauve">Tratamiento 08</span>
+                            </div>
+                            <div class="p-6 flex flex-col flex-1">
+                                <h3 class="font-serif text-xl text-carbon">Ácido Hialurónico – <span class="italic text-mauve">Tratamiento de Ojeras</span></h3>
+                                <p class="text-xs text-plomo-500 font-light mt-2.5 leading-relaxed">
+                                    Relleno del surco lagrimal profundo y eliminación del aspecto cansado bajo la mirada. Fórmula de bajo peso molecular que evita bolsas y pigmentaciones.
+                                </p>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Tratamiento%20de%20Ojeras" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-center mt-5 flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Reservar
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 9. Ácido Hialurónico – Aumento de Mentón -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-56 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80" alt="Aumento de Mentón" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-semibold tracking-wider uppercase text-mauve">Tratamiento 09</span>
+                            </div>
+                            <div class="p-6 flex flex-col flex-1">
+                                <h3 class="font-serif text-xl text-carbon">Ácido Hialurónico – <span class="italic text-mauve">Aumento de Mentón</span></h3>
+                                <p class="text-xs text-plomo-500 font-light mt-2.5 leading-relaxed">
+                                    Proyección del mentón retraído para equilibrar el tercio inferior del rostro con la nariz y los labios. Proporciones armónicas inmediatas.
+                                </p>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Aumento%20de%20Ment%C3%B3n" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-center mt-5 flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Reservar
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 10. Ácido Hialurónico – Perfilado Mandibular -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-56 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Perfilado Mandibular" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-semibold tracking-wider uppercase text-mauve">Tratamiento 10</span>
+                            </div>
+                            <div class="p-6 flex flex-col flex-1">
+                                <h3 class="font-serif text-xl text-carbon">Ácido Hialurónico – <span class="italic text-mauve">Perfilado Mandibular</span></h3>
+                                <p class="text-xs text-plomo-500 font-light mt-2.5 leading-relaxed">
+                                    Marcación y angulación del borde de la mandíbula para disimular la papada y dar un efecto de rejuvenecimiento estructural y definición elegante.
+                                </p>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Perfilado%20Mandibular" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-center mt-5 flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Reservar
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 11. Skinbooster (Tratamiento e hidratación profunda de piel) -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-56 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80" alt="Skinbooster" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-semibold tracking-wider uppercase text-mauve">Tratamiento 11</span>
+                            </div>
+                            <div class="p-6 flex flex-col flex-1">
+                                <h3 class="font-serif text-xl text-carbon">Skinbooster – <span class="italic text-mauve">Hidratación Profunda</span></h3>
+                                <p class="text-xs text-plomo-500 font-light mt-2.5 leading-relaxed">
+                                    Microinyecciones dérmicas de ácido hialurónico no reticulado y vitaminas que devuelven el brillo natural, elasticidad y suavidad desde las capas más profundas.
+                                </p>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Skinbooster" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-center mt-5 flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Reservar
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 12. Bioestimuladores (Tratamiento contra la flacidez facial) -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-56 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?auto=format&fit=crop&w=800&q=80" alt="Bioestimuladores de Colágeno" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-semibold tracking-wider uppercase text-mauve">Tratamiento 12</span>
+                            </div>
+                            <div class="p-6 flex flex-col flex-1">
+                                <h3 class="font-serif text-xl text-carbon">Bioestimuladores <span class="italic text-mauve">(Contra la Flacidez)</span></h3>
+                                <p class="text-xs text-plomo-500 font-light mt-2.5 leading-relaxed">
+                                    Activación biológica de colágeno tipo I y elastina (Radiesse / Sculptra). Redensifica la piel, combate la pérdida de firmeza y otorga un efecto tensor progresivo.
+                                </p>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Bioestimuladores" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-center mt-5 flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Reservar
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 13. Hilos de PDO (Lifting sin cirugía para flacidez facial) -->
+                        <article class="card-luxe group overflow-hidden flex flex-col">
+                            <div class="h-56 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80" alt="Hilos de PDO" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-semibold tracking-wider uppercase text-mauve">Tratamiento 13</span>
+                            </div>
+                            <div class="p-6 flex flex-col flex-1">
+                                <h3 class="font-serif text-xl text-carbon">Hilos de PDO <span class="italic text-mauve">(Lifting sin Cirugía)</span></h3>
+                                <p class="text-xs text-plomo-500 font-light mt-2.5 leading-relaxed">
+                                    Hilos espiculados y monofilamentos reabsorbibles de polidioxanona que reposicionan los tejidos caídos de pómulos, mandíbula y cuello con fijación biológica inmediata.
+                                </p>
+                                <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20Hilos%20PDO" target="_blank" rel="noopener" class="btn-mauve mt-auto rounded-full min-h-[48px] py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-center mt-5 flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Reservar
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- 14. Morpheus 8 (Tratamiento estrella para flacidez, poros, manchas y grasa localizada) -->
+                        <article class="card-luxe group overflow-hidden flex flex-col lg:col-span-3 border-2 border-mauve/40 bg-gradient-to-br from-white via-perla to-plomo-50">
+                            <div class="grid grid-cols-1 lg:grid-cols-12 items-center">
+                                <div class="lg:col-span-5 h-64 lg:h-full min-h-[260px] overflow-hidden relative">
+                                    <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=1000&q=80" alt="Morpheus 8" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                                    <span class="absolute top-4 left-4 bg-mauve text-white px-3.5 py-1 rounded-full text-[10px] font-semibold tracking-widest uppercase">Tratamiento Estrella</span>
+                                </div>
+                                <div class="lg:col-span-7 p-8 sm:p-10 flex flex-col">
+                                    <span class="text-[10px] tracking-[0.3em] uppercase text-mauve font-semibold">Tecnología Subdérmica Fraccionada</span>
+                                    <h3 class="font-serif text-2xl sm:text-3xl text-carbon mt-1">Morpheus 8 – <span class="italic text-mauve">Remodelación Total</span></h3>
+                                    <p class="text-sm text-plomo-500 font-light mt-3 leading-relaxed">
+                                        La tecnología de referencia mundial que combina microneedling de oro con radiofrecuencia bipolar fraccionada para actuar hasta 4 mm de profundidad. Trata de raíz la flacidez facial, poros dilatados, manchas pigmentarias y reduce el tejido adiposo subdérmico de papada y mejillas.
+                                    </p>
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-6 text-center">
+                                        <div class="p-3 bg-white rounded-xl border border-plomo-200">
+                                            <i class="fa-solid fa-arrows-up-down text-mauve text-sm mb-1"></i>
+                                            <p class="text-[10px] uppercase font-semibold text-carbon">Flacidez</p>
+                                        </div>
+                                        <div class="p-3 bg-white rounded-xl border border-plomo-200">
+                                            <i class="fa-solid fa-circle-nodes text-mauve text-sm mb-1"></i>
+                                            <p class="text-[10px] uppercase font-semibold text-carbon">Poros</p>
+                                        </div>
+                                        <div class="p-3 bg-white rounded-xl border border-plomo-200">
+                                            <i class="fa-solid fa-sun text-mauve text-sm mb-1"></i>
+                                            <p class="text-[10px] uppercase font-semibold text-carbon">Manchas</p>
+                                        </div>
+                                        <div class="p-3 bg-white rounded-xl border border-plomo-200">
+                                            <i class="fa-solid fa-fire text-mauve text-sm mb-1"></i>
+                                            <p class="text-[10px] uppercase font-semibold text-carbon">Grasa Localizada</p>
+                                        </div>
+                                    </div>
+                                    <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20agendar%20evaluaci%C3%B3n%20para%20Morpheus%208" target="_blank" rel="noopener" class="btn-mauve rounded-full py-4 text-xs font-semibold uppercase tracking-[0.2em] text-center flex items-center justify-center gap-2 shadow-md">
+                                        <i class="fa-brands fa-whatsapp text-base"></i> Agendar Evaluación Morpheus 8
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =====================================================
+             CARA 3: MÁQUINAS (TECNOLOGÍA DE VANGUARDIA CLÍNICA)
+        ====================================================== -->
+        <div data-view="maquinas" class="bg-plomo-100">
+            <header class="pt-28 pb-8 text-center px-5 bg-perla border-b border-plomo-200">
+                <span class="text-[10px] tracking-[0.35em] uppercase text-mauve font-semibold">Pantalla Exclusiva · Tecnología</span>
+                <h1 class="font-serif text-4xl md:text-6xl text-carbon mt-3">Máquinas y <span class="italic text-mauve">Aparatología Avanzada</span></h1>
+                <p class="text-plomo-500 text-sm md:text-lg font-light max-w-2xl mx-auto mt-4">Equipamiento médico y odontológico de estándar internacional para procedimientos milimétricos, rápidos y libres de dolor.</p>
+            </header>
+
+            <section class="py-10 md:py-16">
+                <div class="max-w-7xl mx-auto px-5 sm:px-8 space-y-10">
+                    
+                    <!-- Máquina 1: Morpheus 8 -->
+                    <article class="card-luxe group overflow-hidden grid grid-cols-1 lg:grid-cols-2 shadow-sm">
+                        <div class="h-72 lg:h-auto min-h-[320px] overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=1200&q=80" alt="Morpheus 8" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                            <span class="absolute top-4 left-4 bg-mauve text-white px-3.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase">Vanguardia Orofacial</span>
+                        </div>
+                        <div class="p-8 md:p-12 flex flex-col justify-center">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-mauve font-semibold">Tecnología 01</span>
+                            <h2 class="font-serif text-3xl md:text-4xl text-carbon mt-1">Morpheus 8 – <span class="italic text-mauve">Radiofrecuencia Subdérmica</span></h2>
+                            <p class="text-sm text-plomo-500 font-light mt-4 leading-relaxed">
+                                Sistema de radiofrecuencia fraccionada subdérmica que penetra mediante microagujas recubiertas de oro hasta 4 mm en el tejido cutáneo y conectivo. Provoca una coagulación térmica controlada que regenera las fibras elásticas, cierra poros dilatados, atenúa manchas dérmicas y coagula la grasa de papada y contorno facial.
+                            </p>
+                            <div class="grid grid-cols-3 gap-4 mt-7 text-center">
+                                <div class="bg-plomo-50 rounded-xl py-3.5 border border-plomo-200">
+                                    <span class="font-serif text-2xl text-mauve font-bold">4 mm</span>
+                                    <p class="text-[9px] uppercase tracking-wider text-plomo-500 mt-1">Profundidad</p>
+                                </div>
+                                <div class="bg-plomo-50 rounded-xl py-3.5 border border-plomo-200">
+                                    <span class="font-serif text-2xl text-mauve font-bold">24 Pines</span>
+                                    <p class="text-[9px] uppercase tracking-wider text-plomo-500 mt-1">Microagujas de Oro</p>
+                                </div>
+                                <div class="bg-plomo-50 rounded-xl py-3.5 border border-plomo-200">
+                                    <span class="font-serif text-2xl text-mauve font-bold">100%</span>
+                                    <p class="text-[9px] uppercase tracking-wider text-plomo-500 mt-1">Colágeno Nuevo</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Máquina 2: Escáner Intraoral 3D -->
+                    <article class="card-luxe group overflow-hidden grid grid-cols-1 lg:grid-cols-2 shadow-sm">
+                        <div class="h-72 lg:h-auto min-h-[320px] overflow-hidden relative lg:order-2">
+                            <img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=1200&q=80" alt="Escáner Intraoral 3D" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                            <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase text-mauve">Odontología Digital</span>
+                        </div>
+                        <div class="p-8 md:p-12 flex flex-col justify-center lg:order-1">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-mauve font-semibold">Tecnología 02</span>
+                            <h2 class="font-serif text-3xl md:text-4xl text-carbon mt-1">Escáner Intraoral <span class="italic text-mauve">Óptico 3D</span></h2>
+                            <p class="text-sm text-plomo-500 font-light mt-4 leading-relaxed">
+                                Captura óptica digital de 60 fotogramas por segundo que erradica las tradicionales cubetas y pastas que causan náuseas. Reproduce en pantalla a color y en 3D la anatomía exacta de tus dientes y encías con una precisión micrométrica para el diseño de carillas, implantes y ortodoncia invisible.
+                            </p>
+                            <div class="grid grid-cols-3 gap-4 mt-7 text-center">
+                                <div class="bg-plomo-50 rounded-xl py-3.5 border border-plomo-200">
+                                    <span class="font-serif text-2xl text-mauve font-bold">20 µm</span>
+                                    <p class="text-[9px] uppercase tracking-wider text-plomo-500 mt-1">Precisión Óptica</p>
+                                </div>
+                                <div class="bg-plomo-50 rounded-xl py-3.5 border border-plomo-200">
+                                    <span class="font-serif text-2xl text-mauve font-bold">3 min</span>
+                                    <p class="text-[9px] uppercase tracking-wider text-plomo-500 mt-1">Toma Completa</p>
+                                </div>
+                                <div class="bg-plomo-50 rounded-xl py-3.5 border border-plomo-200">
+                                    <span class="font-serif text-2xl text-mauve font-bold">0</span>
+                                    <p class="text-[9px] uppercase tracking-wider text-plomo-500 mt-1">Pastas o Molestias</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Máquina 3: Láser Dental y Fototerapia Avanzada -->
+                    <article class="card-luxe group overflow-hidden grid grid-cols-1 lg:grid-cols-2 shadow-sm">
+                        <div class="h-72 lg:h-auto min-h-[320px] overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1200&q=80" alt="Láser Dental y Fototerapia" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                            <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase text-mauve">Bioestimulación Tisular</span>
+                        </div>
+                        <div class="p-8 md:p-12 flex flex-col justify-center">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-mauve font-semibold">Tecnología 03</span>
+                            <h2 class="font-serif text-3xl md:text-4xl text-carbon mt-1">Láser Diodo y <span class="italic text-mauve">Fototerapia Avanzada</span></h2>
+                            <p class="text-sm text-plomo-500 font-light mt-4 leading-relaxed">
+                                Emisión lumínica de longitud de onda selectiva para gingivoplastía estética (recorte estético de encías sin bisturí ni sangrado), blanqueamiento dental acelerado y fototerapia antiinflamatoria que estimula la cicatrización biológica inmediata de los tejidos orofaciales.
+                            </p>
+                            <div class="grid grid-cols-3 gap-4 mt-7 text-center">
+                                <div class="bg-plomo-50 rounded-xl py-3.5 border border-plomo-200">
+                                    <span class="font-serif text-2xl text-mauve font-bold">0 mm</span>
+                                    <p class="text-[9px] uppercase tracking-wider text-plomo-500 mt-1">Sin Puntos Sutura</p>
+                                </div>
+                                <div class="bg-plomo-50 rounded-xl py-3.5 border border-plomo-200">
+                                    <span class="font-serif text-2xl text-mauve font-bold">810 nm</span>
+                                    <p class="text-[9px] uppercase tracking-wider text-plomo-500 mt-1">Longitud de Onda</p>
+                                </div>
+                                <div class="bg-plomo-50 rounded-xl py-3.5 border border-plomo-200">
+                                    <span class="font-serif text-2xl text-mauve font-bold">100%</span>
+                                    <p class="text-[9px] uppercase tracking-wider text-plomo-500 mt-1">Bio-Regeneración</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Máquina 4: Ultrasonido Piezoeléctrico y Diagnóstico Facial Digital -->
+                    <article class="card-luxe group overflow-hidden grid grid-cols-1 lg:grid-cols-2 shadow-sm">
+                        <div class="h-72 lg:h-auto min-h-[320px] overflow-hidden relative lg:order-2">
+                            <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=1200&q=80" alt="Ultrasonido Piezoeléctrico" class="w-full h-full object-cover group-hover:scale-105 duration-700 transition-transform">
+                            <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase text-mauve">Cirugía y Diagnóstico</span>
+                        </div>
+                        <div class="p-8 md:p-12 flex flex-col justify-center lg:order-1">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-mauve font-semibold">Tecnología 04</span>
+                            <h2 class="font-serif text-3xl md:text-4xl text-carbon mt-1">Ultrasonido Piezoeléctrico & <span class="italic text-mauve">Diagnóstico Facial</span></h2>
+                            <p class="text-sm text-plomo-500 font-light mt-4 leading-relaxed">
+                                Instrumentación micro-vibratoria ultrasónica que corta selectivamente tejido duro (hueso) respetando al 100% las terminaciones nerviosas y vasos sanguíneos de encías y rostro. Complementado con software de cefalometría y proporciones áureas digitales para armonizaciones milimétricas.
+                            </p>
+                            <div class="grid grid-cols-3 gap-4 mt-7 text-center">
+                                <div class="bg-plomo-50 rounded-xl py-3.5 border border-plomo-200">
+                                    <span class="font-serif text-2xl text-mauve font-bold">30 kHz</span>
+                                    <p class="text-[9px] uppercase tracking-wider text-plomo-500 mt-1">Micromovimiento</p>
+                                </div>
+                                <div class="bg-plomo-50 rounded-xl py-3.5 border border-plomo-200">
+                                    <span class="font-serif text-2xl text-mauve font-bold">0%</span>
+                                    <p class="text-[9px] uppercase tracking-wider text-plomo-500 mt-1">Daño a Nervios</p>
+                                </div>
+                                <div class="bg-plomo-50 rounded-xl py-3.5 border border-plomo-200">
+                                    <span class="font-serif text-2xl text-mauve font-bold">1:1.618</span>
+                                    <p class="text-[9px] uppercase tracking-wider text-plomo-500 mt-1">Proporción Áurea</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- =====================================================
+             CARA 4: PACIENTES (CASOS REALES & TESTIMONIOS FEMENINOS)
+        ====================================================== -->
+        <div data-view="pacientes" class="bg-perla">
+            <header class="pt-28 pb-8 text-center px-5">
+                <span class="text-[10px] tracking-[0.35em] uppercase text-mauve font-semibold">Pantalla Exclusiva · Pacientes</span>
+                <h1 class="font-serif text-4xl md:text-6xl text-carbon mt-3">Casos de Éxito y <span class="italic text-mauve">Testimonios</span></h1>
+                <p class="text-plomo-500 text-sm md:text-lg font-light max-w-2xl mx-auto mt-4">Resultados que transmiten confianza, armonía visual y bienestar duradero en cada expresión.</p>
+            </header>
+
+            <!-- Cifras de Confianza -->
+            <section class="max-w-7xl mx-auto px-5 sm:px-8 pb-10">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-plomo-100 border border-plomo-200 rounded-2xl py-7 text-center">
+                        <span class="font-serif text-4xl text-mauve font-bold">+4,800</span>
+                        <p class="text-[10px] uppercase tracking-[0.2em] text-plomo-500 mt-1 font-semibold">Pacientes Atendidos</p>
+                    </div>
+                    <div class="bg-plomo-100 border border-plomo-200 rounded-2xl py-7 text-center">
+                        <span class="font-serif text-4xl text-mauve font-bold">4.9★</span>
+                        <p class="text-[10px] uppercase tracking-[0.2em] text-plomo-500 mt-1 font-semibold">Calificación Google</p>
+                    </div>
+                    <div class="bg-plomo-100 border border-plomo-200 rounded-2xl py-7 text-center">
+                        <span class="font-serif text-4xl text-mauve font-bold">+1,200</span>
+                        <p class="text-[10px] uppercase tracking-[0.2em] text-plomo-500 mt-1 font-semibold">Sonrisas Diseñadas</p>
+                    </div>
+                    <div class="bg-plomo-100 border border-plomo-200 rounded-2xl py-7 text-center">
+                        <span class="font-serif text-4xl text-mauve font-bold">98%</span>
+                        <p class="text-[10px] uppercase tracking-[0.2em] text-plomo-500 mt-1 font-semibold">Recomendación</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Galería de Casos Reales -->
+            <section class="max-w-7xl mx-auto px-5 sm:px-8 py-10">
+                <div class="text-center mb-8">
+                    <span class="text-[10px] tracking-[0.3em] uppercase text-mauve font-semibold">Galería de Resultados</span>
+                    <h2 class="font-serif text-3xl md:text-4xl text-carbon mt-1">Sonrisas y Perfiles <span class="italic text-mauve">Armonizados</span></h2>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:auto-rows-[220px]">
+                    <figure class="group relative col-span-2 row-span-2 rounded-2xl overflow-hidden min-h-[260px] border border-plomo-200 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1000&q=80" alt="Diseño de Sonrisa Cerámica" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <figcaption class="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-carbon/80 to-transparent text-white">
+                            <span class="text-[10px] uppercase tracking-[0.25em] text-quartz font-semibold">Caso Destacado</span>
+                            <p class="font-serif italic text-xl mt-0.5">Diseño de sonrisa con carillas cerámicas</p>
+                        </figcaption>
+                    </figure>
+                    <figure class="group relative rounded-2xl overflow-hidden min-h-[160px] border border-plomo-200 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1616391182219-e080b4d1043a?auto=format&fit=crop&w=600&q=80" alt="Escultura Labial" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <figcaption class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-carbon/75 to-transparent text-white text-xs">Escultura labial anatómica</figcaption>
+                    </figure>
+                    <figure class="group relative rounded-2xl overflow-hidden min-h-[160px] border border-plomo-200 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?auto=format&fit=crop&w=600&q=80" alt="Rinomodelación" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <figcaption class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-carbon/75 to-transparent text-white text-xs">Rinomodelación con Ácido Hialurónico</figcaption>
+                    </figure>
+                    <figure class="group relative rounded-2xl overflow-hidden min-h-[160px] border border-plomo-200 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=600&q=80" alt="Rejuvenecimiento Facial" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <figcaption class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-carbon/75 to-transparent text-white text-xs">Toxina botulínica en tercio superior</figcaption>
+                    </figure>
+                    <figure class="group relative rounded-2xl overflow-hidden min-h-[160px] border border-plomo-200 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80" alt="Morpheus 8" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <figcaption class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-carbon/75 to-transparent text-white text-xs">Tensado cutáneo con Morpheus 8</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <!-- Comparador Antes / Después Interactivo -->
+            <section class="bg-plomo-100 py-10 md:py-14 border-t border-plomo-200">
+                <div class="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                    <div>
+                        <span class="text-[10px] tracking-[0.3em] uppercase text-mauve font-semibold">Transformación en Tiempo Real</span>
+                        <h2 class="font-serif text-3xl md:text-4xl text-carbon mt-2">Desliza para apreciar <span class="italic text-mauve">la armonía</span></h2>
+                        <p class="text-sm text-plomo-500 font-light mt-4 leading-relaxed">
+                            Diseño de sonrisa con carillas cerámicas de disilicato de litio y perfilado de bordes incisales: integración biológica que respeta la encía y devuelve luminosidad al rostro.
+                        </p>
+                    </div>
+                    <div class="ba-wrap rounded-2xl aspect-[4/3] shadow-lg border border-plomo-200" id="baSlider">
+                        <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=1000&q=80" alt="Antes" class="absolute inset-0 w-full h-full object-cover grayscale">
+                        <div class="ba-after">
+                            <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=1000&q=80" alt="Después" class="w-full h-full object-cover">
+                        </div>
+                        <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-carbon text-[10px] uppercase font-semibold tracking-widest px-3.5 py-1 rounded-full shadow-sm">Antes</span>
+                        <span class="absolute top-4 right-4 bg-mauve text-white text-[10px] uppercase font-semibold tracking-widest px-3.5 py-1 rounded-full shadow-sm">Después</span>
+                        <div class="ba-handle"></div>
+                        <input type="range" min="0" max="100" value="50" class="ba-range" aria-label="Deslizar antes y después">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonios de Pacientes Femeninas -->
+            <section class="max-w-7xl mx-auto px-5 sm:px-8 py-10 md:py-14 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <figure class="bg-plomo-100 border border-plomo-200 rounded-2xl p-8 flex flex-col hover:-translate-y-1 hover:shadow-lg hover:border-mauve/40 transition-all duration-500">
+                    <div class="flex items-center gap-4 mb-5">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Valeria" class="w-12 h-12 rounded-full object-cover border border-plomo-300">
+                        <div>
+                            <p class="text-sm font-semibold text-carbon">Valeria Mendoza</p>
+                            <p class="text-[10px] uppercase tracking-[0.2em] text-mauve font-semibold">Diseño de Sonrisa & Carillas</p>
+                        </div>
+                    </div>
+                    <div class="text-mauve text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <blockquote class="font-serif italic text-carbon/85 leading-relaxed font-light">
+                        “Mis carillas quedaron tan naturales que nadie nota que son de cerámica. Me devolvieron la seguridad de sonreír sin taparme la boca.”
+                    </blockquote>
+                </figure>
+
+                <figure class="bg-plomo-100 border border-plomo-200 rounded-2xl p-8 flex flex-col hover:-translate-y-1 hover:shadow-lg hover:border-mauve/40 transition-all duration-500">
+                    <div class="flex items-center gap-4 mb-5">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80" alt="Mariana" class="w-12 h-12 rounded-full object-cover border border-plomo-300">
+                        <div>
+                            <p class="text-sm font-semibold text-carbon">Dra. Mariana Benavides</p>
+                            <p class="text-[10px] uppercase tracking-[0.2em] text-mauve font-semibold">Morpheus 8 y Bioestimuladores</p>
+                        </div>
+                    </div>
+                    <div class="text-mauve text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <blockquote class="font-serif italic text-carbon/85 leading-relaxed font-light">
+                        “Tenía flacidez incipiente en mandíbula y poros abiertos. Con Morpheus 8 mi piel se tensó por completo sin necesidad de un quirófano.”
+                    </blockquote>
+                </figure>
+
+                <figure class="bg-plomo-100 border border-plomo-200 rounded-2xl p-8 flex flex-col hover:-translate-y-1 hover:shadow-lg hover:border-mauve/40 transition-all duration-500">
+                    <div class="flex items-center gap-4 mb-5">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80" alt="Camila" class="w-12 h-12 rounded-full object-cover border border-plomo-300">
+                        <div>
+                            <p class="text-sm font-semibold text-carbon">Camila Salazar</p>
+                            <p class="text-[10px] uppercase tracking-[0.2em] text-mauve font-semibold">Rinomodelación & Labios</p>
+                        </div>
+                    </div>
+                    <div class="text-mauve text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <blockquote class="font-serif italic text-carbon/85 leading-relaxed font-light">
+                        “El perfilado de labios y la rinomodelación fueron indoloros. Cero hematomas y el resultado es sumamente elegante y sutil.”
+                    </blockquote>
+                </figure>
+            </section>
+        </div>
+
+        <!-- =====================================================
+             CARA 5: EXPERIENCIA (ESTÁNDAR EDITORIAL Y LUJO CLÍNICO)
+        ====================================================== -->
+        <div data-view="experiencia" class="bg-perla">
+            <header class="pt-28 pb-8 text-center px-5">
+                <span class="text-[10px] tracking-[0.35em] uppercase text-mauve font-semibold">Pantalla Exclusiva · Experiencia</span>
+                <h1 class="font-serif text-4xl md:text-6xl text-carbon mt-3">El Estándar <span class="italic text-mauve">Byamond</span></h1>
+                <p class="text-plomo-500 text-sm md:text-lg font-light max-w-2xl mx-auto mt-4">Un santuario clínico diseñado con rigor arquitectónico para tu privacidad, relajación y máxima bioseguridad.</p>
+            </header>
+
+            <!-- Revista Editorial: Bloque 1 - Boxes y Privacidad -->
+            <section class="max-w-7xl mx-auto px-5 sm:px-8 py-8">
+                <div class="relative rounded-3xl overflow-hidden border border-plomo-200 shadow-sm bg-carbon text-white">
+                    <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1600&q=80" alt="Privacidad Byamond" class="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-luminosity">
+                    <div class="absolute inset-0 bg-gradient-to-r from-carbon via-carbon/80 to-transparent"></div>
+                    <div class="relative z-10 p-8 sm:p-14 lg:p-20 max-w-2xl">
+                        <span class="text-[10px] tracking-[0.3em] uppercase text-quartz font-semibold">Editorial Vol. 01 · Privacidad Absoluta</span>
+                        <h2 class="font-serif text-3xl sm:text-5xl text-ivory mt-4 leading-tight">Consultorios concebidos para <span class="italic text-quartz">tu serenidad.</span></h2>
+                        <p class="text-sm sm:text-base text-ivory/80 font-light mt-5 leading-relaxed">
+                            Boxes clínicos individuales e insonorizados, sin ruidos mecánicos invasivos. Cada espacio de atención cuenta con sillones ergonómicos de alta densidad, aromaterapia relajante y climatización purificada con filtros HEPA para que cada sesión sea un momento de descanso.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Revista Editorial: Bloque 2 - Bioseguridad y Lounge VIP -->
+            <section class="bg-plomo-100 py-10 md:py-16 border-y border-plomo-200">
+                <div class="max-w-7xl mx-auto px-5 sm:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
+                        <div class="lg:col-span-5">
+                            <span class="text-[10px] tracking-[0.3em] uppercase text-mauve font-semibold">Protocolos Clínicos</span>
+                            <h3 class="font-serif text-3xl sm:text-4xl text-carbon mt-2">Bioseguridad hospitalaria de <span class="italic text-mauve">clase mundial</span></h3>
+                            <p class="text-sm text-plomo-500 font-light mt-4 leading-relaxed">
+                                Cada instrumental pasa por un riguroso ciclo de termodesinfección y autoclave clase B computarizado. Todos los productos inyectables de alta gama (ácido hialurónico, bioestimuladores y toxinas) son abiertos y desprecintados delante de ti.
+                            </p>
+                        </div>
+                        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div class="relative rounded-2xl overflow-hidden min-h-[260px] border border-plomo-200 shadow-sm bg-carbon text-white">
+                                <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80" alt="Esterilización" class="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-luminosity">
+                                <div class="absolute inset-0 bg-gradient-to-t from-carbon via-carbon/70 to-transparent"></div>
+                                <div class="relative z-10 p-6 flex flex-col justify-end h-full">
+                                    <i class="fa-solid fa-shield-virus text-quartz text-xl mb-2"></i>
+                                    <h4 class="font-serif text-lg text-white">Trazabilidad por Lote</h4>
+                                    <p class="text-xs text-ivory/70 font-light mt-1">Sticker original de fabricante entregado en tu historia clínica médica.</p>
+                                </div>
+                            </div>
+                            <div class="relative rounded-2xl overflow-hidden min-h-[260px] border border-plomo-200 shadow-sm bg-carbon text-white">
+                                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" alt="Lounge VIP" class="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-luminosity">
+                                <div class="absolute inset-0 bg-gradient-to-t from-carbon via-carbon/70 to-transparent"></div>
+                                <div class="relative z-10 p-6 flex flex-col justify-end h-full">
+                                    <i class="fa-solid fa-crown text-quartz text-xl mb-2"></i>
+                                    <h4 class="font-serif text-lg text-white">Atención VIP Sin Esperas</h4>
+                                    <p class="text-xs text-ivory/70 font-light mt-1">Agenda estricta con tiempo exclusivo reservado para cada paciente.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 Tarjetas de Estándar Clínico -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <div class="card-luxe p-7">
+                            <div class="w-11 h-11 rounded-full bg-plomo-100 flex items-center justify-center text-mauve mb-4">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h4 class="font-semibold text-carbon">0% Riesgo Cruzado</h4>
+                            <p class="text-xs text-plomo-500 font-light mt-1 leading-relaxed">Instalaciones sanitizadas bajo normas de quirófano ambulatorio.</p>
+                        </div>
+                        <div class="card-luxe p-7">
+                            <div class="w-11 h-11 rounded-full bg-plomo-100 flex items-center justify-center text-mauve mb-4">
+                                <i class="fa-solid fa-mug-hot"></i>
+                            </div>
+                            <h4 class="font-semibold text-carbon">Bar Lounge Privado</h4>
+                            <p class="text-xs text-plomo-500 font-light mt-1 leading-relaxed">Infusiones herbales, café de especialidad y lectura de arte de cortesía.</p>
+                        </div>
+                        <div class="card-luxe p-7">
+                            <div class="w-11 h-11 rounded-full bg-plomo-100 flex items-center justify-center text-mauve mb-4">
+                                <i class="fa-solid fa-user-doctor"></i>
+                            </div>
+                            <h4 class="font-semibold text-carbon">Médicos Certificados</h4>
+                            <p class="text-xs text-plomo-500 font-light mt-1 leading-relaxed">Especialistas colegiados con maestría y postgrado internacional.</p>
+                        </div>
+                        <div class="card-luxe p-7">
+                            <div class="w-11 h-11 rounded-full bg-plomo-100 flex items-center justify-center text-mauve mb-4">
+                                <i class="fa-solid fa-heart-pulse"></i>
+                            </div>
+                            <h4 class="font-semibold text-carbon">Control Post-Tratamiento</h4>
+                            <p class="text-xs text-plomo-500 font-light mt-1 leading-relaxed">Cita de control incluida a los 15 días para garantizar tu satisfacción.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-10 text-center px-5">
+                <p class="font-serif italic text-2xl md:text-3xl text-carbon max-w-3xl mx-auto">“La verdadera belleza no transforma tu esencia; la realza con sutileza.”</p>
+                <a href="#contacto" class="btn-mauve inline-flex mt-8 rounded-full px-9 py-4 text-xs font-semibold uppercase tracking-[0.2em] shadow-sm">Vivir la Experiencia Byamond</a>
+            </section>
+        </div>
+
+        <!-- =====================================================
+             CARA 6: CONTACTO (FOTO RECEPCIÓN + SELECTOR RÁPIDO 1 CLIC + FORMULARIO)
+        ====================================================== -->
+        <div data-view="contacto" class="bg-perla">
+            <header class="pt-28 pb-8 text-center px-5">
+                <span class="text-[10px] tracking-[0.35em] uppercase text-mauve font-semibold">Pantalla Exclusiva · Contacto</span>
+                <h1 class="font-serif text-4xl md:text-6xl text-carbon mt-3">Reserva <span class="italic text-mauve">Inmediata</span></h1>
+                <p class="text-plomo-500 text-sm md:text-lg font-light max-w-2xl mx-auto mt-4">Atención médica personalizada. Elige tu tratamiento en 1 clic o coordina tu cita directamente a WhatsApp.</p>
+            </header>
+
+            <!-- Banner Fotográfico de la Recepción -->
+            <section class="max-w-7xl mx-auto px-5 sm:px-8 mb-10">
+                <div class="relative rounded-3xl overflow-hidden min-h-[220px] md:min-h-[260px] border border-plomo-200 shadow-sm flex items-center bg-carbon text-white">
+                    <img src="https://images.unsplash.com/photo-1629909613638-0e4a1fad8f81?auto=format&fit=crop&w=1600&q=80" alt="Recepción Byamond" class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity">
+                    <div class="absolute inset-0 bg-gradient-to-r from-carbon via-carbon/80 to-transparent"></div>
+                    <div class="relative z-10 p-8 sm:p-12 max-w-xl">
+                        <span class="text-[10px] tracking-[0.3em] uppercase text-quartz font-semibold">Atención Exclusiva</span>
+                        <h2 class="font-serif text-2xl sm:text-3xl text-ivory mt-2">Recepción Byamond</h2>
+                        <p class="text-xs sm:text-sm text-ivory/75 font-light mt-2 leading-relaxed">
+                            Diseñada para recibirte en un ambiente cálido, sereno y confidencial. Contamos con valet parking privado y acceso protegido para nuestros pacientes.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Selector Rápido Interactivo en 1 Clic Directo a WhatsApp -->
+            <section class="max-w-7xl mx-auto px-5 sm:px-8 mb-12">
+                <div class="bg-white border border-plomo-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+                    <div class="text-center max-w-2xl mx-auto mb-6">
+                        <span class="text-[10px] tracking-[0.25em] uppercase text-mauve font-semibold">Selector Rápido Interactivo</span>
+                        <h3 class="font-serif text-2xl sm:text-3xl text-carbon mt-1">¿Qué deseas consultar hoy?</h3>
+                        <p class="text-xs text-plomo-500 font-light mt-1">Haz clic en el tratamiento deseado y se abrirá tu WhatsApp con el mensaje preconfigurado al instante:</p>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                        <button type="button" onclick="quickWhatsApp('Diseño de Sonrisa & Carillas')" class="p-4 rounded-xl border border-plomo-200 bg-plomo-50 hover:bg-mauve hover:text-white hover:border-mauve transition-all text-center group">
+                            <i class="fa-solid fa-tooth text-mauve group-hover:text-white text-xl mb-2"></i>
+                            <span class="block text-xs font-semibold uppercase tracking-wider">Diseño de Sonrisa</span>
+                            <span class="text-[10px] text-plomo-500 group-hover:text-white/80">Carillas y Lentes 3D</span>
+                        </button>
+                        <button type="button" onclick="quickWhatsApp('Morpheus 8 – Rejuvenecimiento Facial')" class="p-4 rounded-xl border border-plomo-200 bg-plomo-50 hover:bg-mauve hover:text-white hover:border-mauve transition-all text-center group">
+                            <i class="fa-solid fa-wand-magic-sparkles text-mauve group-hover:text-white text-xl mb-2"></i>
+                            <span class="block text-xs font-semibold uppercase tracking-wider">Morpheus 8</span>
+                            <span class="text-[10px] text-plomo-500 group-hover:text-white/80">Flacidez y Manchas</span>
+                        </button>
+                        <button type="button" onclick="quickWhatsApp('Armonización Orofacial & Rinomodelación')" class="p-4 rounded-xl border border-plomo-200 bg-plomo-50 hover:bg-mauve hover:text-white hover:border-mauve transition-all text-center group">
+                            <i class="fa-solid fa-gem text-mauve group-hover:text-white text-xl mb-2"></i>
+                            <span class="block text-xs font-semibold uppercase tracking-wider">Armonización</span>
+                            <span class="text-[10px] text-plomo-500 group-hover:text-white/80">Rinomodelación y Labios</span>
+                        </button>
+                        <button type="button" onclick="quickWhatsApp('Toxina Botulínica & Bruxismo')" class="p-4 rounded-xl border border-plomo-200 bg-plomo-50 hover:bg-mauve hover:text-white hover:border-mauve transition-all text-center group">
+                            <i class="fa-solid fa-shield-halved text-mauve group-hover:text-white text-xl mb-2"></i>
+                            <span class="block text-xs font-semibold uppercase tracking-wider">Botox & Bruxismo</span>
+                            <span class="text-[10px] text-plomo-500 group-hover:text-white/80">Alivio Masetero V-Line</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Formulario de Cita + Datos y Mapa -->
+            <section class="bg-plomo-100 py-10 md:py-14 border-t border-plomo-200">
+                <div class="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    
+                    <!-- Formulario de reserva con selector -->
+                    <form id="reservaForm" class="lg:col-span-7 card-luxe p-7 sm:p-10 space-y-6">
+                        <h4 class="font-serif text-2xl text-carbon">Formulario de Consulta Médica</h4>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-[0.25em] text-plomo-500 mb-3">1. Selecciona Tratamiento de Interés</label>
+                            <select id="rServicio" class="field-input w-full rounded-full px-5 py-3 text-sm">
+                                <optgroup label="Odontología Integral y Estética">
+                                    <option value="Rehabilitación Oral">Rehabilitación Oral</option>
+                                    <option value="Implantes Dentales">Implantes Dentales</option>
+                                    <option value="Ortodoncia">Ortodoncia</option>
+                                    <option value="Estética Dental (Diseño de sonrisa)">Estética Dental (Diseño de sonrisa)</option>
+                                </optgroup>
+                                <optgroup label="Armonización Orofacial">
+                                    <option value="Toxina Botulínica (Arrugas y Bruxismo)">Toxina Botulínica (Arrugas y Bruxismo)</option>
+                                    <option value="Ácido Hialurónico – Rinomodelación">Ácido Hialurónico – Rinomodelación</option>
+                                    <option value="Ácido Hialurónico – Escultura Labial">Ácido Hialurónico – Escultura Labial</option>
+                                    <option value="Ácido Hialurónico – Tratamiento de Ojeras">Ácido Hialurónico – Tratamiento de Ojeras</option>
+                                    <option value="Ácido Hialurónico – Aumento de Mentón">Ácido Hialurónico – Aumento de Mentón</option>
+                                    <option value="Ácido Hialurónico – Perfilado Mandibular">Ácido Hialurónico – Perfilado Mandibular</option>
+                                    <option value="Skinbooster (Hidratación profunda)">Skinbooster (Hidratación profunda)</option>
+                                    <option value="Bioestimuladores contra flacidez">Bioestimuladores contra flacidez</option>
+                                    <option value="Hilos de PDO (Lifting sin cirugía)">Hilos de PDO (Lifting sin cirugía)</option>
+                                    <option value="Morpheus 8 (Flacidez, poros y manchas)">Morpheus 8 (Flacidez, poros y manchas)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="rNombre" class="block text-[10px] uppercase tracking-[0.25em] text-plomo-500 mb-2">2. Tu Nombre Completo</label>
+                                <input id="rNombre" type="text" required placeholder="Ej. Mariana López" class="field-input w-full rounded-full px-5 py-3 text-sm">
+                            </div>
+                            <div>
+                                <label for="rHorario" class="block text-[10px] uppercase tracking-[0.25em] text-plomo-500 mb-2">3. Horario Preferido</label>
+                                <select id="rHorario" class="field-input w-full rounded-full px-5 py-3 text-sm">
+                                    <option>Mañana (9:00 – 13:00)</option>
+                                    <option>Tarde (13:00 – 17:00)</option>
+                                    <option>Noche (17:00 – 20:00)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-mauve w-full rounded-full py-4 text-xs font-semibold uppercase tracking-[0.2em] flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fa-brands fa-whatsapp text-base"></i> Coordinar Cita por WhatsApp
+                        </button>
+                        <p class="text-[11px] text-center text-plomo-400">Respuesta en minutos · Atención protegida bajo secreto profesional médico</p>
+                    </form>
+
+                    <!-- Datos y Mapa de Ubicación -->
+                    <div class="lg:col-span-5 flex flex-col gap-6">
+                        <div class="card-luxe p-7 space-y-4 text-sm text-carbon/80">
+                            <div class="flex gap-3"><i class="fa-solid fa-location-dot text-mauve mt-1"></i><span>Av. Principal 123, San Isidro – Lima, Perú (Valet parking privado)</span></div>
+                            <div class="flex gap-3"><i class="fa-regular fa-clock text-mauve mt-1"></i><span>Lun – Vie: 9:00 AM – 8:00 PM<br>Sábados: 9:00 AM – 2:00 PM</span></div>
+                            <div class="flex gap-3"><i class="fa-brands fa-whatsapp text-mauve mt-1"></i><span>Central Citas: +51 999 999 999</span></div>
+                            <div class="flex gap-3 pt-2">
+                                <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="w-10 h-10 rounded-full border border-plomo-200 flex items-center justify-center text-mauve hover:bg-mauve hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" class="w-10 h-10 rounded-full border border-plomo-200 flex items-center justify-center text-mauve hover:bg-mauve hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok" class="w-10 h-10 rounded-full border border-plomo-200 flex items-center justify-center text-mauve hover:bg-mauve hover:text-white transition-all"><i class="fa-brands fa-tiktok"></i></a>
+                            </div>
+                        </div>
+                        <div class="rounded-2xl overflow-hidden border border-plomo-200 flex-1 min-h-[260px] shadow-sm">
+                            <iframe title="Ubicación BYAMOND" src="https://www.google.com/maps?q=San+Isidro+Lima+Peru&output=embed" class="w-full h-full min-h-[260px]" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- =====================================================
+         FOOTER OFICIAL CON LOGO REAL BYAMOND
+    ====================================================== -->
+    <footer class="bg-gradient-to-b from-[#8A6870] to-[#5E434A] text-ivory py-12 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <div class="flex items-center gap-4">
+                <img src="LOGO/BYAMOND (1).png" alt="Logo Oficial BYAMOND" class="h-12 w-auto object-contain">
+                <div class="leading-none">
+                    <span class="text-2xl tracking-[0.25em] text-ivory uppercase block font-medium">BYAMOND</span>
+                    <span class="text-[8px] tracking-[0.2em] uppercase text-ivory/80">Salud Dental y Estética Orofacial</span>
+                </div>
+            </div>
+
+            <nav class="flex flex-wrap justify-center gap-6 text-[10px] uppercase tracking-[0.2em] text-ivory/80">
+                <a href="#inicio" class="hover:text-white transition-colors">Inicio</a>
+                <a href="#servicios" class="hover:text-white transition-colors">Servicios</a>
+                <a href="#maquinas" class="hover:text-white transition-colors">Máquinas</a>
+                <a href="#pacientes" class="hover:text-white transition-colors">Pacientes</a>
+                <a href="#experiencia" class="hover:text-white transition-colors">Experiencia</a>
+                <a href="#contacto" class="hover:text-white transition-colors">Contacto</a>
+            </nav>
+
+            <p class="text-[10px] text-ivory/60 font-light">
+                © 2026 BYAMOND. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/51999999999?text=Hola%20BYAMOND,%20deseo%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="WhatsApp" class="fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] right-4 sm:right-6 z-50 flex items-center justify-center min-h-[48px] min-w-[48px] gap-2 bg-[#25D366] text-white px-4 sm:px-5 py-3 rounded-full shadow-[0_10px_30px_-8px_rgba(37,211,102,0.6)] active:scale-95 hover:scale-105 transition-all duration-300">
+        <i class="fa-brands fa-whatsapp text-lg"></i>
+        <span class="hidden sm:inline text-[10px] font-semibold tracking-[0.2em] uppercase">Agenda tu cita</span>
+    </a>
+
+    <!-- =====================================================
+         SCRIPTS: ARQUITECTURA MULTICARA & TRANSICIONES SUAVES
+    ====================================================== -->
+    <script>
+        const WHATSAPP = '51999999999';
+        const VIEWS = ['inicio', 'servicios', 'maquinas', 'pacientes', 'experiencia', 'contacto'];
+        const navbar = document.getElementById('navbar');
+        const navCta = document.getElementById('navCta');
+        let activeView = null;
+
+        // ===== Router Multi-Cara: Solo una pantalla visible a la vez con scroll suave =====
+        function render() {
+            const hash = location.hash.slice(1);
+            const view = VIEWS.includes(hash) ? hash : 'inicio';
+            if (view === activeView) return;
+            activeView = view;
+
+            document.querySelectorAll('[data-view]').forEach(el => {
+                const on = el.dataset.view === view;
+                el.classList.toggle('is-active', on);
+                if (on) {
+                    el.classList.remove('animate-fadeInView');
+                    void el.offsetWidth;
+                    el.classList.add('animate-fadeInView');
+                }
+            });
+
+            document.querySelectorAll('[data-link]').forEach(a => {
+                a.classList.toggle('active', a.dataset.link === view);
+            });
+
+            // Ajuste dinámico del navbar según cara
+            const onHero = view === 'inicio';
+            navbar.classList.toggle('on-hero', onHero);
+            navbar.classList.toggle('on-light', !onHero);
+            navCta.className = (onHero ? 'btn-ivory' : 'btn-mauve') + ' hidden sm:inline-flex rounded-full px-6 py-2.5 text-[11px] font-semibold tracking-[0.18em] uppercase';
+
+            document.title = view === 'inicio'
+                ? 'BYAMOND | Salud Dental y Estética Orofacial'
+                : `${view.charAt(0).toUpperCase() + view.slice(1)} | BYAMOND`;
+
+            closeMenu();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('hashchange', render);
+        window.addEventListener('DOMContentLoaded', render);
+
+        // Botón "Explorar Clínica" en portada
+        const toAccesosBtn = document.getElementById('toAccesos');
+        if (toAccesosBtn) {
+            toAccesosBtn.addEventListener('click', e => {
+                e.preventDefault();
+                document.getElementById('accesos').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        // Menú móvil
+        const mobileNav = document.getElementById('mobileNav');
+        const menuIcon = document.getElementById('menuIcon');
+        function closeMenu() {
+            if (mobileNav && menuIcon) {
+                mobileNav.classList.add('hidden');
+                menuIcon.className = 'fa-solid fa-bars text-sm';
+            }
+        }
+        const menuBtn = document.getElementById('menuBtn');
+        if (menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                const open = mobileNav.classList.toggle('hidden') === false;
+                menuIcon.className = open ? 'fa-solid fa-xmark text-sm' : 'fa-solid fa-bars text-sm';
+            });
+        }
+
+        // Selector Rápido 1-Clic a WhatsApp
+        function quickWhatsApp(motivoTexto) {
+            const msg = `Hola BYAMOND, deseo consultar y agendar una cita para: ${motivoTexto}. ¿Qué horarios tienen disponibles?`;
+            window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // Antes / Después Slider
+        const ba = document.getElementById('baSlider');
+        if (ba) {
+            const range = ba.querySelector('.ba-range');
+            const after = ba.querySelector('.ba-after');
+            const handle = ba.querySelector('.ba-handle');
+            range.addEventListener('input', () => {
+                after.style.clipPath = `inset(0 0 0 ${range.value}%)`;
+                handle.style.left = range.value + '%';
+            });
+        }
+
+        // Formulario de Reserva con Selector de Tratamiento Completo
+        const reservaForm = document.getElementById('reservaForm');
+        if (reservaForm) {
+            reservaForm.addEventListener('submit', e => {
+                e.preventDefault();
+                const servicio = document.getElementById('rServicio').value;
+                const nombre = document.getElementById('rNombre').value.trim();
+                const horario = document.getElementById('rHorario').value;
+                const msg = `Hola BYAMOND, soy ${nombre}. Deseo reservar una cita para ${servicio}. Horario preferido: ${horario}.`;
+                window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+            });
+        }
+    </script>
+</body>
+</html>
